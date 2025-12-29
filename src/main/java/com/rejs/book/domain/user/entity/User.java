@@ -3,11 +3,17 @@ package com.rejs.book.domain.user.entity;
 import com.rejs.book.domain.loan.entity.Loan;
 import com.rejs.book.domain.reservation.entity.Reservation;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Entity
 public class User {
@@ -27,6 +33,10 @@ public class User {
 
     @Column
     private String mobile;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private UserRole userRole;
 
     @OneToMany(mappedBy = "user")
     private List<Reservation> reservations = new ArrayList<>();

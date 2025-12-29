@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>회원가입</title>
+</head>
+<body>
+
+<div class="container">
+    <div >
+        <div >
+            <h3 >로그인</h3>
+        </div>
+        <div>
+            <div th:if="${redirectMsg}" >
+                <strong th:text="${redirectMsg}">메시지 내용</strong>
+            </div>
+            <form th:action="@{/login}" method="post">
+
+                <div>
+                    <label>사용자 ID</label>
+                    <input type="text" name="username" required>
+                </div>
+
+                <div>
+                    <label>비밀번호</label>
+                    <input type="password" name="password" required>
+                </div>
+
+                <div th:if="${param.error}" class="alert alert-danger">
+                    <p th:if="${session == null or session['SPRING_SECURITY_LAST_EXCEPTION'] == null}">
+                        아이디 또는 비밀번호를 확인해주세요.
+                    </p>
+
+                    <p th:if="${session != null and session['SPRING_SECURITY_LAST_EXCEPTION'] != null}"
+                       th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">
+                        에러 메시지 내용
+                    </p>
+                </div>
+                <div>
+                    <button type="submit">로그인</button>
+                    <a th:href="@{/signup}">계정이 없나요? 회원가입</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

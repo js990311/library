@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>회원가입</title>
+</head>
+<body>
+
+<div >
+    <div >
+        <div >
+            <h3 >회원가입</h3>
+        </div>
+        <div >
+            <form th:action="@{/signup}" th:object="${signupForm}" method="post">
+
+                <div th:if="${#fields.hasGlobalErrors()}" >
+                    <p  th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                </div>
+
+                <div >
+                    <label th:for="username" >사용자 ID</label>
+                    <input type="text" th:field="*{username}"
+                           th:classappend="${#fields.hasErrors('username')} ? 'is-invalid'" placeholder="아이디를 입력하세요">
+                    <div  th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                </div>
+                
+                <div >
+                    <label th:for="password" >비밀번호</label>
+                    <input type="password" th:field="*{password}"
+                           th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'" placeholder="8자 이상 입력">
+                    <div  th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                </div>
+                <div >
+                    <button type="submit" >가입하기</button>
+                    <a th:href="@{/login}" >이미 계정이 있나요? 로그인</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
