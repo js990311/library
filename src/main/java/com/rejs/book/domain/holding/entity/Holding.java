@@ -21,7 +21,7 @@ import java.util.List;
 @Builder
 @Getter
 @Entity
-@SQLDelete(sql = "UPDATE holdings SET deleted_at = NOW() WHERE holidng_id = ?")
+@SQLDelete(sql = "UPDATE holdings SET deleted_at = NOW() WHERE holding_id = ?")
 @SQLRestriction("deleted_at IS NULL")
 @Table(name = "holdings")
 public class Holding extends BaseEntity {

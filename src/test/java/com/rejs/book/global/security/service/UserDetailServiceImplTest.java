@@ -53,7 +53,7 @@ class UserDetailServiceImplTest {
                 .set(javaGetter(User::getUsername), username)
                 .set(javaGetter(User::getUserRole), UserRole.USER)
                 .set(javaGetter(User::getPassword), password)
-                .setNull("id")
+                .setNull(javaGetter(User::getId))
                 .sample();
 
         when(userRepository.findByUsername("testUser")).thenReturn(Optional.of(testUser));
