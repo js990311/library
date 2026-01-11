@@ -29,7 +29,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-flyway'
-	implementation 'org.springframework.boot:spring-boot-starter-opentelemetry'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	implementation 'org.flywaydb:flyway-mysql'
@@ -40,7 +39,6 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-batch-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-flyway-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-opentelemetry-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
@@ -51,11 +49,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-	// thymeleaf
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-	testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf-test'
-
+	// jsp
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper' // 톰캣 jsp
+	compileOnly 'jakarta.servlet:jakarta.servlet-api:6.1.0' // el 사용
+	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api' // jsp 태그
+	implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
+	implementation 'org.springframework.security:spring-security-taglibs:7.0.2' // spring 시큐리티 jsp 지원
 }
 
 tasks.named('test') {
