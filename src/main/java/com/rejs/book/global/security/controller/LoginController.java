@@ -1,5 +1,6 @@
 package com.rejs.book.global.security.controller;
 
+import com.rejs.book.global.security.dto.LoginRequest;
 import com.rejs.book.global.security.dto.SignupRequest;
 import com.rejs.book.global.security.exception.UsernameAlreadyExistsException;
 import com.rejs.book.global.security.service.SignupService;
@@ -25,7 +26,8 @@ public class LoginController {
 
 
     @GetMapping("/login")
-    public String loginPage(){
+    public String loginPage(Model model){
+        model.addAttribute("loginForm", new LoginRequest());
         return "user/login";
     }
 

@@ -55,6 +55,9 @@ dependencies {
 	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api' // jsp 태그
 	implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
 	implementation 'org.springframework.security:spring-security-taglibs:7.0.2' // spring 시큐리티 jsp 지원
+
+	// dev tools
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
 tasks.named('test') {
