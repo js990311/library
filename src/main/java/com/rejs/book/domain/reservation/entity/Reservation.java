@@ -2,14 +2,26 @@ package com.rejs.book.domain.reservation.entity;
 
 import com.rejs.book.domain.holding.entity.Holding;
 import com.rejs.book.domain.user.entity.User;
+import com.rejs.book.global.entity.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
 @Entity
-public class Reservation {
+@SQLDelete(sql = "UPDATE reservations SET deleted_at = NOW() WHERE reservation_id = ?")
+@SQLRestriction("deleted_at IS NULL")
+@Table(name = "reservations")
+public class Reservation extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,18 +39,8 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     private Holding holding;
 
-    public void mapHolding(Holding holding){
-        this.holding = holding;
-        this.holding.getReservations().add(this);
-    }
-
     // 관계 사용자
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
-    public void mapUser(User user){
-        this.user = user;
-        this.user.getReservations().add(this);
-    }
 
 }

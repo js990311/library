@@ -1,5 +1,8 @@
 package com.rejs.book.global.security.service;
 
+import com.navercorp.fixturemonkey.FixtureMonkey;
+import com.navercorp.fixturemonkey.api.introspector.BuilderArbitraryIntrospector;
+import com.navercorp.fixturemonkey.api.introspector.ConstructorPropertiesArbitraryIntrospector;
 import com.rejs.book.domain.user.entity.User;
 import com.rejs.book.domain.user.entity.UserRole;
 import com.rejs.book.domain.user.repository.UserRepository;
@@ -16,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
+import static com.navercorp.fixturemonkey.api.expression.JavaGetterMethodPropertySelector.javaGetter;
 import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,24 +35,27 @@ class UserDetailServiceImplTest {
     @InjectMocks
     private UserDetailServiceImpl userDetailService;
 
+    private final FixtureMonkey fixtureMonkey = FixtureMonkey.builder()
+            .objectIntrospector(BuilderArbitraryIntrospector.INSTANCE)
+            .build();
+
     private User testUser;
 
     private String username = "testUser";
     private String password = "encodedPassword";
     private UserRole role = UserRole.USER;
 
-    @BeforeEach
-    void setUp() {
-        testUser = User.builder()
-                .username(username)
-                .password(password)
-                .userRole(role)
-                .build();
-    }
-
     @Test
     @DisplayName("성공: 존재하는 사용자 이름으로 조회 시 UserDetails 반환")
     void loadUserByUsername() {
+        String username = "testUser";
+        User testUser = fixtureMonkey.giveMeBuilder(User.class)
+                .set(javaGetter(User::getUsername), username)
+                .set(javaGetter(User::getUserRole), UserRole.USER)
+                .set(javaGetter(User::getPassword), password)
+                .setNull(javaGetter(User::getId))
+                .sample();
+
         when(userRepository.findByUsername("testUser")).thenReturn(Optional.of(testUser));
 
         UserDetails userDetails = userDetailService.loadUserByUsername("testUser");
