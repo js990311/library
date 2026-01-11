@@ -1,0 +1,30 @@
+server:
+  jsp-servlet:
+    init-parameters:
+      development: true
+
+spring:
+  application:
+    name: book
+  web:
+    resources:
+      static-locations: classpath:/static/,classpath:/public/,classpath:/resources/
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    url: jdbc:mariadb://localhost:3306/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.web: DEBUG
+    org.springframework.web: DEBUG
