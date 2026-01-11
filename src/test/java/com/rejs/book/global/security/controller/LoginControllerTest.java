@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -19,6 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(LoginController.class)
+@ActiveProfiles("test")
 @Import(SecurityConfig.class)
 class LoginControllerTest {
 
@@ -33,7 +35,7 @@ class LoginControllerTest {
     void signupPage_test() throws Exception {
         mockMvc.perform(get("/signup"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("signup"))
+                .andExpect(view().name("user/signup"))
                 .andExpect(model().attributeExists("signupForm"));
     }
 
@@ -65,7 +67,7 @@ class LoginControllerTest {
                         .with(csrf())
                 )
                 .andExpect(status().isOk())
-                .andExpect(view().name("signup"))
+                .andExpect(view().name("user/signup"))
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeHasFieldErrors("signupForm", "username"));
     }
@@ -79,7 +81,7 @@ class LoginControllerTest {
                         .with(csrf())
                 )
                 .andExpect(status().isOk())
-                .andExpect(view().name("signup"))
+                .andExpect(view().name("user/signup"))
                 .andExpect(model().hasErrors());
     }
 }

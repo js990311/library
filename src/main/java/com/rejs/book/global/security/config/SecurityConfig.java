@@ -19,6 +19,7 @@ public class SecurityConfig {
                 .csrf(csrf-> Customizer.withDefaults())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
+                        .loginProcessingUrl("/login-process")
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
