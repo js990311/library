@@ -1,5 +1,6 @@
 package com.rejs.book.global.security.controller;
 
+import com.rejs.book.global.security.dto.LoginRequest;
 import com.rejs.book.global.security.dto.SignupRequest;
 import com.rejs.book.global.security.exception.UsernameAlreadyExistsException;
 import com.rejs.book.global.security.service.SignupService;
@@ -18,27 +19,34 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class LoginController {
     private final SignupService signupService;
 
+    @GetMapping("/")
+    public String indexPage(){
+        return "index";
+    }
+
+
     @GetMapping("/login")
-    private String loginPage(){
-        return "login";
+    public String loginPage(Model model){
+        model.addAttribute("loginForm", new LoginRequest());
+        return "user/login";
     }
 
     @GetMapping("/signup")
-    private String signupPage(Model model){
+    public String signupPage(Model model){
         model.addAttribute("signupForm", new SignupRequest());
-        return "signup";
+        return "user/signup";
     }
 
     @PostMapping("/signup")
-    private String signup(@Valid @ModelAttribute("signupForm") SignupRequest request, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String signup(@Valid @ModelAttribute("signupForm") SignupRequest request, BindingResult bindingResult, RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
-            return "signup";
+            return "user/signup";
         }
         try {
             signupService.signup(request);
         }catch (UsernameAlreadyExistsException e){
             bindingResult.rejectValue("username", "already.exists", "이미 사용 중인 아이디입니다.");
-            return "signup";
+            return "user/signup";
         }
         redirectAttributes.addFlashAttribute("redirectMsg", "회원가입 성공했습니다. 로그인해주십시오");
         return "redirect:/login";

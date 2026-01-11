@@ -1,0 +1,4 @@
+.navbar { backdrop-filter: blur(10px); background-color: rgba(33, 37, 41, 0.9) !important; }
+.nav-link { font-weight: 500; transition: color 0.2s ease-in-out; }
+.dropdown-menu { min-width: 160px; border-radius: 12px; }
+.user-avatar { width: 32px; height: 32px; background: linear-gradient(45deg, #6a11cb, #2575fc); }
