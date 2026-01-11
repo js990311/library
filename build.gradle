@@ -58,6 +58,10 @@ dependencies {
 
 	// dev tools
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// fixture 몽키
+	testImplementation("com.navercorp.fixturemonkey:fixture-monkey-starter:1.1.15")
+
 }
 
 tasks.named('test') {
