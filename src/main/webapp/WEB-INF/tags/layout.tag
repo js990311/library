@@ -12,12 +12,13 @@
     <title>${not empty title ? title : 'FoodLog'}</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="<c:url value='/css/global.css' />">
     <jsp:invoke fragment="head"/>
 </head>
 <body class="bg-body-tertiary">
 <jsp:include page="/WEB-INF/views/layout/nav.jsp" />
 <main class="container">
-    <div class="bg-white mt-3 p-4 p-md-5 rounded shadow-sm border">
+    <div class="bg-white mt-5 p-4 p-md-5 rounded shadow-sm border">
         <jsp:doBody/>
     </div>
 </main>
