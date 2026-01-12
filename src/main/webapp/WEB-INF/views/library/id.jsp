@@ -25,7 +25,7 @@
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end pt-3 border-top">
                     <a href="/libraries" class="btn btn-outline-secondary me-md-2">목록으로</a>
-                    <a href="/libraries/${library.id}/edit" class="btn btn-warning">정보 수정</a>
+                    <a href="/libraries/${library.id}/update" class="btn btn-warning">정보 수정</a>
                     <form:form action="/libraries/${library.id}/delete" method="post" style="display:inline;">
                         <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
                     </form:form>

@@ -36,7 +36,7 @@
                                     </td>
                                     <td>${lib.location}</td>
                                     <td class="text-center">
-                                        <a href="/libraries/${lib.id}/edit" class="btn btn-sm btn-outline-secondary">수정</a>
+                                        <a href="/libraries/${lib.id}/update" class="btn btn-sm btn-outline-secondary">수정</a>
                                         <form:form action="/libraries/${lib.id}/delete" method="post" style="display:inline;">
                                             <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
                                         </form:form>

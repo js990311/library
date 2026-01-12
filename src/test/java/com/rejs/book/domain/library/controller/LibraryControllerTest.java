@@ -187,4 +187,66 @@ class LibraryControllerTest {
 
         verify(libraryService, times(1)).delete(invalidId);
     }
+
+    @Test
+    @DisplayName("도서관 수정 폼 조회 성공")
+    void getLibraryUpdate_success() throws Exception {
+        // Given
+        Long targetId = 1L;
+        LibraryResponse response = fixtureMonkey.giveMeBuilder(LibraryResponse.class)
+                .set(javaGetter(LibraryResponse::getId), targetId)
+                .set(javaGetter(LibraryResponse::getName), "기존 도서관")
+                .set(javaGetter(LibraryResponse::getLocation), "서울")
+                .sample();
+
+        given(libraryService.readById(targetId)).willReturn(response);
+
+        // When & Then
+        mockMvc.perform(get("/libraries/{id}/update", targetId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("library/update"))
+                .andExpect(model().attributeExists("libraryRequest"));
+    }
+
+    @Test
+    @DisplayName("도서관 수정 처리 성공 - 리다이렉트 확인")
+    void postLibraryUpdate_success() throws Exception {
+        // Given
+        Long targetId = 1L;
+        LibraryRequest request = fixtureMonkey.giveMeBuilder(LibraryRequest.class)
+                .set(javaGetter(LibraryRequest::getName), "수정된 도서관")
+                .set(javaGetter(LibraryRequest::getLocation), "인천")
+                .sample();
+
+        // When & Then
+        mockMvc.perform(post("/libraries/{id}/update", targetId)
+                        .flashAttr("libraryRequest", request) // @ModelAttribute 바인딩
+                        .with(csrf()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/libraries"));
+
+        // 서비스의 update 메서드가 정확히 호출되었는지 확인
+        verify(libraryService, times(1)).update(eq(targetId), any(LibraryRequest.class));
+    }
+
+    @Test
+    @DisplayName("도서관 수정 처리 실패 - 유효성 검사 오류")
+    void postLibraryUpdate_validationFail() throws Exception {
+        // Given
+        Long targetId = 1L;
+        // name을 빈 값으로 보내 @NotEmpty 위반 유도
+        LibraryRequest invalidRequest = LibraryRequest.builder()
+                .name("")
+                .location("인천")
+                .build();
+
+        // When & Then
+        mockMvc.perform(post("/libraries/{id}/update", targetId)
+                        .flashAttr("libraryRequest", invalidRequest)
+                        .with(csrf()))
+                .andExpect(view().name("library/update")); // 다시 수정 폼으로 이동
+
+        // 검증 에러가 발생했으므로 서비스의 update는 호출되지 않아야 함
+        verify(libraryService, never()).update(anyLong(), any(LibraryRequest.class));
+    }
 }

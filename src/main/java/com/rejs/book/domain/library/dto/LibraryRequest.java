@@ -15,4 +15,11 @@ public class LibraryRequest {
     private String name;
     @NotEmpty
     private String location;
+
+    public static LibraryRequest from (LibraryResponse library){
+        return LibraryRequest.builder()
+                .name(library.getName())
+                .location(library.getLocation())
+                .build();
+    }
 }

@@ -64,4 +64,23 @@ public class LibraryController {
         return "redirect:/libraries";
     }
 
+    @GetMapping("/{id}/update")
+    public String getLibraryUpdate(@PathVariable("id") Long libraryId, Model model){
+        LibraryResponse library = libraryService.readById(libraryId);
+        model.addAttribute("libraryRequest", LibraryRequest.from(library));
+        return "library/update";
+    }
+
+    @PostMapping("/{id}/update")
+    public String postLibraryUpdate(
+            @PathVariable("id") Long libraryId,
+            @Valid @ModelAttribute LibraryRequest request,
+            BindingResult bindingResult
+    ){
+        if(bindingResult.hasErrors()){
+            return "library/update";
+        }
+        libraryService.update(libraryId, request);
+        return "redirect:/libraries";
+    }
 }
