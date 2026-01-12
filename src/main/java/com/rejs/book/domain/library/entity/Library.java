@@ -38,4 +38,10 @@ public class Library extends BaseEntity {
     // 관계 - 소장도서
     @OneToMany(mappedBy = "library")
     private List<Holding> holdings;
+
+    public void update(String name, String location, String webpage){
+        this.name = name;
+        this.location = location;
+        this.webpage = webpage;
+    }
 }
