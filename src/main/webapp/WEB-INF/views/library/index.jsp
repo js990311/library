@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>1
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <t:layout title="홈 - 도서관">
     <div class="container mt-4">
@@ -27,14 +28,18 @@
                             <c:forEach items="${libraryPage.content}" var="lib">
                                 <tr>
                                     <td>${lib.id}</td>
-                                    <td><strong>${lib.name}</strong></td>
+                                    <td>
+                                        <a href="/libraries/${lib.id}"
+                                           class="text-decoration-none link-primary fw-bold d-block py-1">
+                                            ${lib.name}
+                                        </a>
+                                    </td>
                                     <td>${lib.location}</td>
                                     <td class="text-center">
                                         <a href="/libraries/${lib.id}/edit" class="btn btn-sm btn-outline-secondary">수정</a>
-                                        <form action="/libraries/${lib.id}/delete" method="post" style="display:inline;">
-                                            <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                    onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
-                                        </form>
+                                        <form:form action="/libraries/${lib.id}/delete" method="post" style="display:inline;">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
+                                        </form:form>
                                     </td>
                                 </tr>
                             </c:forEach>

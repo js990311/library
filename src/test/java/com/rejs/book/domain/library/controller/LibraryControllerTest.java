@@ -152,4 +152,39 @@ class LibraryControllerTest {
                 .andExpect(view().name("error/404"))
         ;
     }
+
+    @Test
+    @DisplayName("도서관 삭제 성공 - 리다이렉트 확인")
+    void postLibraryDelete_success() throws Exception {
+        // Given
+        Long targetId = 1L;
+        // libraryService.delete(id)는 보통 void를 반환하므로 별도의 given 설정 없이 호출 여부만 확인합니다.
+
+        // When & Then
+        mockMvc.perform(post("/libraries/{id}/delete", targetId)
+                        .with(csrf())) // CSRF 토큰 필수
+                .andExpect(status().is3xxRedirection()) // 302 리다이렉트 확인
+                .andExpect(redirectedUrl("/libraries")); // 목록으로 가는지 확인
+
+        // 서비스의 delete 메서드가 정확한 ID로 1회 호출되었는지 검증
+        verify(libraryService, times(1)).delete(targetId);
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 도서관 삭제 시도 시 404 응답")
+    void postLibraryDelete_fail_notFound() throws Exception {
+        // Given
+        Long invalidId = 999L;
+        // 서비스에서 존재하지 않을 때 예외를 던지도록 설정
+        doThrow(new LibraryNotFoundException()).when(libraryService).delete(invalidId);
+
+        // When & Then
+        mockMvc.perform(post("/libraries/{id}/delete", invalidId)
+                        .with(csrf())
+                )
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("error/404"));
+
+        verify(libraryService, times(1)).delete(invalidId);
+    }
 }

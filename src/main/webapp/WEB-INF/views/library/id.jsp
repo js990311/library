@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <t:layout title="도서관 상세 정보 - ${library.name}">
     <div class="container mt-5" style="max-width: 800px;">
@@ -25,9 +26,9 @@
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end pt-3 border-top">
                     <a href="/libraries" class="btn btn-outline-secondary me-md-2">목록으로</a>
                     <a href="/libraries/${library.id}/edit" class="btn btn-warning">정보 수정</a>
-                    <form action="/libraries/${library.id}/delete" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?')">
-                        <button type="submit" class="btn btn-danger">삭제</button>
-                    </form>
+                    <form:form action="/libraries/${library.id}/delete" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">삭제</button>
+                    </form:form>
                 </div>
             </div>
         </div>

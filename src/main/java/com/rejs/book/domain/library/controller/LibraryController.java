@@ -58,4 +58,10 @@ public class LibraryController {
         return "library/id";
     }
 
+    @PostMapping("/{id}/delete")
+    public String postLibraryDelete(@PathVariable("id") Long libraryId){
+        libraryService.delete(libraryId);
+        return "redirect:/libraries";
+    }
+
 }
