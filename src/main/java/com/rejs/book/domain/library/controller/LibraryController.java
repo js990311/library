@@ -12,10 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/libraries")
@@ -50,4 +47,15 @@ public class LibraryController {
         libraryService.create(libraryRequest);
         return "redirect:/libraries";
     }
+
+    @GetMapping("/{id}")
+    public String getLibraryId(
+            @PathVariable("id") Long libraryId,
+            Model model
+    ){
+        LibraryResponse library = libraryService.readById(libraryId);
+        model.addAttribute("library", library);
+        return "library/id";
+    }
+
 }

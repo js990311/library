@@ -5,6 +5,7 @@ import com.navercorp.fixturemonkey.api.introspector.BuilderArbitraryIntrospector
 import com.navercorp.fixturemonkey.jakarta.validation.plugin.JakartaValidationPlugin;
 import com.rejs.book.domain.library.dto.LibraryRequest;
 import com.rejs.book.domain.library.dto.LibraryResponse;
+import com.rejs.book.domain.library.exception.LibraryNotFoundException;
 import com.rejs.book.domain.library.service.LibraryService;
 import com.rejs.book.global.security.config.SecurityConfig;
 import com.rejs.book.global.security.controller.LoginController;
@@ -113,5 +114,42 @@ class LibraryControllerTest {
 
         // 에러가 있으면 서비스가 호출되지 않아야 함
         verify(libraryService, never()).create(any(LibraryRequest.class));
+    }
+
+    @Test
+    @DisplayName("도서관 단건 상세 조회 성공")
+    void getLibraryId_success() throws Exception {
+        // Given: Fixture Monkey로 ID와 이름, 위치만 있는 가짜 응답 생성
+        Long targetId = 1L;
+        LibraryResponse response = fixtureMonkey.giveMeBuilder(LibraryResponse.class)
+                .set(javaGetter(LibraryResponse::getId), targetId)
+                .set(javaGetter(LibraryResponse::getName), "관악구립도서관")
+                .set(javaGetter(LibraryResponse::getLocation), "서울시 관악구")
+                .sample();
+
+        given(libraryService.readById(targetId)).willReturn(response);
+
+        // When & Then
+        mockMvc.perform(get("/libraries/{id}", targetId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("library/id"))
+                .andExpect(model().attributeExists("library"))
+                .andExpect(model().attribute("library", response));
+
+        verify(libraryService, times(1)).readById(targetId);
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 도서관 조회 시 예외 발생")
+    void getLibraryId_notFound() throws Exception {
+        // Given
+        Long invalidId = 99L;
+        given(libraryService.readById(invalidId)).willThrow(new LibraryNotFoundException());
+
+        // When & Then
+        mockMvc.perform(get("/libraries/{id}", invalidId))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("error/404"))
+        ;
     }
 }
