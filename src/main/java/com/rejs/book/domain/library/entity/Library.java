@@ -32,16 +32,12 @@ public class Library extends BaseEntity {
     @Column
     private String location;
 
-    @Column
-    private String webpage;
-
     // 관계 - 소장도서
     @OneToMany(mappedBy = "library")
     private List<Holding> holdings;
 
-    public void update(String name, String location, String webpage){
+    public void update(String name, String location){
         this.name = name;
         this.location = location;
-        this.webpage = webpage;
     }
 }

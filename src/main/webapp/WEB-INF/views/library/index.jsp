@@ -6,7 +6,7 @@
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>📚 도서관 목록</h2>
-            <a href="/libraries/new" class="btn btn-primary">새 도서관 등록</a>
+            <a href="/libraries/create" class="btn btn-primary">새 도서관 등록</a>
         </div>
 
             <%-- 도서관 테이블 --%>
@@ -16,9 +16,8 @@
                     <thead class="table-light">
                     <tr>
                         <th style="width: 10%">ID</th>
-                        <th style="width: 25%">도서관명</th>
+                        <th style="width: 40%">도서관명</th>
                         <th style="width: 30%">위치</th>
-                        <th style="width: 15%">웹사이트</th>
                         <th style="width: 20%" class="text-center">관리</th>
                     </tr>
                     </thead>
@@ -30,11 +29,6 @@
                                     <td>${lib.id}</td>
                                     <td><strong>${lib.name}</strong></td>
                                     <td>${lib.location}</td>
-                                    <td>
-                                        <c:if test="${not empty lib.webpage}">
-                                            <a href="${lib.webpage}" target="_blank" class="btn btn-sm btn-link">방문</a>
-                                        </c:if>
-                                    </td>
                                     <td class="text-center">
                                         <a href="/libraries/${lib.id}/edit" class="btn btn-sm btn-outline-secondary">수정</a>
                                         <form action="/libraries/${lib.id}/delete" method="post" style="display:inline;">

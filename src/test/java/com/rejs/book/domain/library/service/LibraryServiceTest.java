@@ -41,8 +41,11 @@ class LibraryServiceTest {
     @Test
     @DisplayName("도서관 등록 성공")
     void create_success() {
+        Long id = 1L;
         LibraryRequest request = fixtureMonkey.giveMeOne(LibraryRequest.class);
-        Library library = fixtureMonkey.giveMeOne(Library.class);
+        Library library = fixtureMonkey.giveMeBuilder(Library.class)
+                .set(javaGetter(Library::getId), id)
+                .sample();
 
         // given
         given(libraryRepository.save(any(Library.class))).willReturn(library);
@@ -51,7 +54,7 @@ class LibraryServiceTest {
         Long savedId = libraryService.create(request);
 
         // then
-        assertThat(savedId).isEqualTo(1L);
+        assertThat(savedId).isEqualTo(id);
         verify(libraryRepository, times(1)).save(any());
     }
 
@@ -59,8 +62,10 @@ class LibraryServiceTest {
     @DisplayName("도서관 단건 조회 성공")
     void readById_success() {
         Long id = 1L;
+        String name = "중앙도서관";
         Library library = fixtureMonkey.giveMeBuilder(Library.class)
-                .set(javaGetter(Library::getId))
+                .set(javaGetter(Library::getId), id)
+                .set(javaGetter(Library::getName), name)
                 .sample();
 
         // given
@@ -70,7 +75,7 @@ class LibraryServiceTest {
         LibraryResponse response = libraryService.readById(id);
 
         // then
-        assertThat(response.getName()).isEqualTo("중앙도서관");
+        assertThat(response.getName()).isEqualTo(name);
     }
 
     @Test
@@ -88,7 +93,7 @@ class LibraryServiceTest {
     void update_success() {
         Long id = 1L;
         Library library = fixtureMonkey.giveMeBuilder(Library.class)
-                .set(javaGetter(Library::getId))
+                .set(javaGetter(Library::getId), id)
                 .sample();
         String newName = "수정된 도서관";
         String newLocation = "경기도";

@@ -25,7 +25,6 @@ public class LibraryService {
         Library library = Library.builder()
                 .name(request.getName())
                 .location(request.getLocation())
-                .webpage(request.getWebpage())
                 .build();
         return libraryRepository.save(library).getId();
     }
@@ -50,8 +49,7 @@ public class LibraryService {
         Library library = libraryRepository.findById(libraryId).orElseThrow(LibraryNotFoundException::new);
         library.update(
                 request.getName(),
-                request.getLocation(),
-                request.getWebpage()
+                request.getLocation()
         );
     }
 
