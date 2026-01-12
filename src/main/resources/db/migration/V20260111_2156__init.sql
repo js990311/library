@@ -2,7 +2,6 @@ CREATE TABLE `libraries` (
     `library_id`	BIGINT	NOT NULL AUTO_INCREMENT,
     `name`	VARCHAR(255)	NOT NULL,
     `location`	VARCHAR(255)	NOT NULL,
-    `website`	VARCHAR(255)	NOT NULL,
     create_at datetime(6),
     update_at datetime(6),
     deleted_at datetime(6),

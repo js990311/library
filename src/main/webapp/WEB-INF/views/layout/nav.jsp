@@ -15,7 +15,7 @@
                     <a href="/" class="nav-link active">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/library" class="nav-link text-white-50">도서관</a>
+                    <a href="/libraries" class="nav-link text-white-50">도서관</a>
                 </li>
             </ul>
 
