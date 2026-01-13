@@ -38,7 +38,9 @@
                                     <td class="text-center">
                                         <a href="/books/${book.id}/update" class="btn btn-sm btn-outline-secondary">수정</a>
                                         <form:form action="/books/${book.id}/delete" method="post" style="display:inline;">
-                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                삭제하기
+                                            </button>
                                         </form:form>
                                     </td>
                                 </tr>

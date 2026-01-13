@@ -2,6 +2,7 @@ package com.rejs.book.domain.book.controller;
 
 import com.rejs.book.domain.book.dto.BookDto;
 import com.rejs.book.domain.book.dto.CreateBookRequest;
+import com.rejs.book.domain.book.dto.UpdateBookRequest;
 import com.rejs.book.domain.book.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -53,4 +54,39 @@ public class BookController {
             return "redirect:/books/" + bookId;
         }
     }
+
+    @PostMapping("/{id}/delete")
+    public String postBookDelete(
+            @PathVariable("id") Long bookId
+    ){
+        bookService.deleteBook(bookId);
+        return "redirect:/books";
+    }
+
+    @GetMapping("/{id}/update")
+    public String getBookUpdate(
+            @PathVariable("id") Long bookId,
+            Model model
+    ){
+        BookDto bookDto = bookService.readById(bookId);
+        UpdateBookRequest request = UpdateBookRequest.from(bookDto);
+        model.addAttribute("updateBookRequest", request);
+        return "book/update";
+    }
+
+
+    @PostMapping("/{id}/update")
+    public String postBookUpdate(
+            @PathVariable("id") Long bookId,
+            @Valid @ModelAttribute("updateBookRequest") UpdateBookRequest request,
+            BindingResult bindingResult
+
+    ){
+        if(bindingResult.hasErrors()){
+            return "book/update";
+        }
+        bookService.update(bookId, request);
+        return "redirect:/books/" + bookId;
+    }
+
 }
