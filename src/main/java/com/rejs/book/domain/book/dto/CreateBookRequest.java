@@ -1,16 +1,17 @@
 package com.rejs.book.domain.book.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.*;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Data
 public class CreateBookRequest {
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String description;
+    @NotEmpty
     private String isbn;
 }

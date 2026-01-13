@@ -17,6 +17,10 @@
                 <li class="nav-item">
                     <a href="/libraries" class="nav-link text-white-50">도서관</a>
                 </li>
+                <li class="nav-item">
+                    <a href="/books" class="nav-link text-white-50">책</a>
+                </li>
+
             </ul>
 
             <div class="d-flex align-items-center">

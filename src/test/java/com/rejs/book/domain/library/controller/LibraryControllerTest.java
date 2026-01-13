@@ -132,7 +132,7 @@ class LibraryControllerTest {
         // When & Then
         mockMvc.perform(get("/libraries/{id}", targetId))
                 .andExpect(status().isOk())
-                .andExpect(view().name("library/id"))
+                .andExpect(view().name("library/id.jsp"))
                 .andExpect(model().attributeExists("library"))
                 .andExpect(model().attribute("library", response));
 
@@ -158,7 +158,7 @@ class LibraryControllerTest {
     void postLibraryDelete_success() throws Exception {
         // Given
         Long targetId = 1L;
-        // libraryService.delete(id)는 보통 void를 반환하므로 별도의 given 설정 없이 호출 여부만 확인합니다.
+        // libraryService.delete(id.jsp)는 보통 void를 반환하므로 별도의 given 설정 없이 호출 여부만 확인합니다.
 
         // When & Then
         mockMvc.perform(post("/libraries/{id}/delete", targetId)
