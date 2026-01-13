@@ -1,5 +1,6 @@
 package com.rejs.book.domain.book.entity;
 
+import com.rejs.book.domain.book.dto.UpdateBookRequest;
 import com.rejs.book.domain.holding.entity.Holding;
 import com.rejs.book.global.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -35,4 +36,10 @@ public class Book extends BaseEntity {
 
     @Column
     private String isbn;
+
+    public void update(UpdateBookRequest request) {
+        this.name = request.getName();
+        this.description = request.getDescription();
+        this.isbn = request.getIsbn();
+    }
 }

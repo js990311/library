@@ -55,7 +55,7 @@ public class LibraryController {
     ){
         LibraryResponse library = libraryService.readById(libraryId);
         model.addAttribute("library", library);
-        return "library/id";
+        return "library/id.jsp";
     }
 
     @PostMapping("/{id}/delete")

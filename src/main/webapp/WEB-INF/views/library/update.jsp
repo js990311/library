@@ -12,7 +12,7 @@
             <div class="card-body p-4">
                 <p class="text-muted mb-4 small">도서관의 이름과 위치 정보를 수정할 수 있습니다.</p>
 
-                    <%-- 컨트롤러의 @PathVariable("id")를 활용하기 위해 action 구성 --%>
+                    <%-- 컨트롤러의 @PathVariable("id.jsp")를 활용하기 위해 action 구성 --%>
                 <form:form action="/libraries/${id}/update" method="post" modelAttribute="libraryRequest">
 
                     <%-- 도서관 이름 --%>
